@@ -19,7 +19,7 @@ package org.apache.flink.connector.rocketmq.sink.writer.context;
 
 import org.apache.flink.annotation.Experimental;
 import org.apache.flink.annotation.PublicEvolving;
-import org.apache.flink.streaming.api.operators.MailboxExecutor;
+import org.apache.flink.api.common.operators.MailboxExecutor;
 
 /**
  * This context provides information on the rocketmq record target location. An implementation that
