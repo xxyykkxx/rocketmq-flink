@@ -210,7 +210,7 @@ public class RocketMQScanTableSource implements ScanTableSource, SupportsReading
                                         Stream.of(ReadableMetadata.values())
                                                 .filter(rm -> rm.key.equals(k))
                                                 .findFirst()
-                                                .orElseThrow(IllegalStateException::new))
+                                                .<IllegalStateException>orElseThrow(IllegalStateException::new))
                         .map(m -> m.converter)
                         .toArray(MetadataConverter[]::new);
         return new RocketMQRowDeserializationSchema(
