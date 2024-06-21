@@ -35,7 +35,7 @@
         <!-- compiler settings properties -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <flink.version>1.15.0</flink.version>
+        <flink.version>1.19.0</flink.version>
         <!-- rocketmq version -->
         <rocketmq.version>5.1.1</rocketmq.version>
         <rocketmq.schema.registry.version>0.1.0</rocketmq.schema.registry.version>

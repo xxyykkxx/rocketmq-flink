@@ -20,12 +20,7 @@ package org.apache.flink.connector.rocketmq.source;
 
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.api.connector.source.Boundedness;
-import org.apache.flink.api.connector.source.Source;
-import org.apache.flink.api.connector.source.SourceReader;
-import org.apache.flink.api.connector.source.SourceReaderContext;
-import org.apache.flink.api.connector.source.SplitEnumerator;
-import org.apache.flink.api.connector.source.SplitEnumeratorContext;
+import org.apache.flink.api.connector.source.*;
 import org.apache.flink.api.java.typeutils.ResultTypeQueryable;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.connector.base.source.reader.RecordsWithSplitIds;
@@ -36,27 +31,24 @@ import org.apache.flink.connector.rocketmq.source.enumerator.RocketMQSourceEnumS
 import org.apache.flink.connector.rocketmq.source.enumerator.RocketMQSourceEnumerator;
 import org.apache.flink.connector.rocketmq.source.enumerator.offset.OffsetsSelector;
 import org.apache.flink.connector.rocketmq.source.metrics.RocketMQSourceReaderMetrics;
-import org.apache.flink.connector.rocketmq.source.reader.MessageView;
-import org.apache.flink.connector.rocketmq.source.reader.RocketMQRecordEmitter;
-import org.apache.flink.connector.rocketmq.source.reader.RocketMQSourceFetcherManager;
-import org.apache.flink.connector.rocketmq.source.reader.RocketMQSourceReader;
-import org.apache.flink.connector.rocketmq.source.reader.RocketMQSplitReader;
+import org.apache.flink.connector.rocketmq.source.reader.*;
 import org.apache.flink.connector.rocketmq.source.reader.deserializer.RocketMQDeserializationSchema;
 import org.apache.flink.connector.rocketmq.source.split.RocketMQPartitionSplitSerializer;
 import org.apache.flink.connector.rocketmq.source.split.RocketMQSourceSplit;
 import org.apache.flink.core.io.SimpleVersionedSerializer;
 import org.apache.flink.metrics.MetricGroup;
 import org.apache.flink.util.UserCodeClassLoader;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.function.Supplier;
 
-/** The Source implementation of RocketMQ. */
+/**
+ * The Source implementation of RocketMQ.
+ */
 public class RocketMQSource<OUT>
         implements Source<OUT, RocketMQSourceSplit, RocketMQSourceEnumState>,
-                ResultTypeQueryable<OUT> {
+        ResultTypeQueryable<OUT> {
 
     private static final long serialVersionUID = -1L;
     private static final Logger log = LoggerFactory.getLogger(RocketMQSource.class);
@@ -133,8 +125,7 @@ public class RocketMQSource<OUT>
                                 rocketMQSourceReaderMetrics);
 
         RocketMQSourceFetcherManager rocketmqSourceFetcherManager =
-                new RocketMQSourceFetcherManager(
-                        elementsQueue, splitReaderSupplier, (ignore) -> {});
+                new RocketMQSourceFetcherManager(elementsQueue, splitReaderSupplier, configuration, (ignore) -> { });
 
         RocketMQRecordEmitter<OUT> recordEmitter =
                 new RocketMQRecordEmitter<>(deserializationSchema);
